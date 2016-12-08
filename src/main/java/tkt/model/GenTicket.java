@@ -18,8 +18,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 public class GenTicket {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private String id;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,10 +37,6 @@ public class GenTicket {
 		return ToStringBuilder.reflectionToString(this);
 	}
 
-	public long getId() {
-		return id;
-	}
-
 	public Date getCreated() {
 		return created;
 	}
@@ -58,7 +53,11 @@ public class GenTicket {
 		this.content = content;
 	}
 
-	public void setId(long id) {
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
 		this.id = id;
 	}
 

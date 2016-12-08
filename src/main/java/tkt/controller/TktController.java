@@ -11,9 +11,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.zip.ZipOutputStream;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.json.JSONObject;
@@ -174,8 +176,14 @@ public class TktController {
 
 	@RequestMapping(value = "/postTicket", method = { RequestMethod.GET,
 			RequestMethod.POST }, produces = "application/json")
-	public GenTicket postTicket(@RequestParam("ticket") String b64TicketContent) {
+	public GenTicket postTicket(@RequestParam("ticket") String b64TicketContent, HttpServletRequest request) {
+		String ipAddress = request.getHeader("X-FORWARDED-FOR");
+		if (ipAddress == null) {
+			ipAddress = request.getRemoteAddr();
+		}
+		String uid = UUID.randomUUID().toString();
 		GenTicket genTicket = new GenTicket();
+		genTicket.setId(ipAddress + "_" + uid);
 		genTicket.setContent(b64TicketContent);
 		genTicket.setCreated(new Date());
 		genTicketDao.save(genTicket);
