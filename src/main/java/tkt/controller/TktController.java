@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -174,16 +176,12 @@ public class TktController {
 		return "H4sIAAAAAAAAAL2YS3ObMBCA/0qGc0YDeoDIzXEezUyapkk6PXR6UECxNeXhCtFJmvF/7wo/aoTpAez6YiHBLt8+tIvevSuRmFoL6Z29e/dCGyUrO3yUWSa1nXizl7dyJrLLwqjV5bTUi1ILI+9EDk96U6G1fClr7S1PvSfxepNKuPdFJcKosrBPdCbv6vxZanh2EnES0Qgzb7mEp2+KX6VKVi+xHu8Mn0ojsmatGX2qTWVEkapiNsnLujDeGQ8R8U9Xy9eykFpkj7VO5kLPrFBn6UJViX1utbKrpC3p8lUmtRHPmdyrR5dVtVo4BzNoCbRWGYtRxNb3wBS87aK2qiii+O+0rL4qM5/LLPXOAuTTrtC1JGsdI/Nd09yqAszz7d37XIu1d3jjAVlttTXGX/9t5K3tt7mM4YVW1gf5F7JKtFqsPGddCypOva2lJkX6IJ/B943ozfTueCM1QIxboY2qaVnBFAkb9BYb9lEMbLsMwQAGisKoh+FWJvPBDIHLEIQopC4DQZi0GcIBDIFvxeyH+AiC5c9aZZkYhoJRFLsoPgp9B4Uj3/EGG0ASQXYcwxuUOQgQuswhgCBjQRshGoDAUHCEgMKIdgKKIRI4DKtIGJ0UHEVhD8N9mWXl4MSmLkOMGHGTAkLJH88A2vpyYtTmxCOHgSHcyWvWQRgWSoQf3g0YhW4oYQj92GFgFLGwzUAHMGBEaB+DKE5SeZKXWTo8KzoRBbEbuSiwrYTjIypGYfx/MpsgHrq7E0P8ALsTR3Efw8TUxVAE5rsRRRHubLDU3je6RuAmBY8WUXzPHkXcBKdgR9pGGdJA/aNWjEcJmu6s7RWOeCfPI8QPULljhI9SubnLQMFobtkjBBqS8e4Ap/aWvQNEVqf6gT43RyBv3D5qWOXw+yrHmDSPSbdwdHOD2Ab+ALkR9RaOMcWPuQwUtip3t6VB5+OCDGAAS/R9II2rGG47G3TbWdY0cS0EPKgjB0McLydw6JLAXKd+Y+QHB0nvvi1qREe4p/gR6GDdrpbAJ/ryO9w3SVNltYrsQhjRHIuIaq6aQ417uVBGnFyXufwNb2MXHuRMVcauBvbcQCU/pHlSuayMyBcwSXngs4hH3A8hAqZlvhDF200KtA3qlcrkBylSK+DdOxcmmW8Hm5OVRrW//Z0H3NseakxrrWWRvE3L1J7YXH558HrPNhxze81Zhz2eWS7/AAbmuXwxEgAA";
 	}
 
-	@RequestMapping(value = "/postTicket", method = { RequestMethod.GET,
-			RequestMethod.POST }, produces = "application/json")
+	@RequestMapping(value = "/post", method = { RequestMethod.POST, RequestMethod.GET }, produces = "application/json")
 	public GenTicket postTicket(@RequestParam("ticket") String b64TicketContent, HttpServletRequest request) {
-		String ipAddress = request.getHeader("X-FORWARDED-FOR");
-		if (ipAddress == null) {
-			ipAddress = request.getRemoteAddr();
-		}
 		String uid = UUID.randomUUID().toString();
 		GenTicket genTicket = new GenTicket();
-		genTicket.setId(ipAddress + "_" + uid);
+		genTicket.setId(uid);
+		b64TicketContent = b64TicketContent.replaceAll(" ", "+");
 		genTicket.setContent(b64TicketContent);
 		genTicket.setCreated(new Date());
 		genTicketDao.save(genTicket);
