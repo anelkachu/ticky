@@ -13,4 +13,6 @@ public interface GenTicketDao extends CrudRepository<GenTicket, Long> {
 	@Cacheable
 	Iterable<GenTicket> findAll();
 
+	GenTicket findById(String ticketId);
+
 }

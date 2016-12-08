@@ -190,4 +190,10 @@ public class TktController {
 		return genTicket;
 	}
 
+	@RequestMapping(value = "/get", method = { RequestMethod.GET, RequestMethod.POST }, produces = "application/json")
+	public GenTicket getTicket(@RequestParam("ticketId") String ticketId) {
+		GenTicket ticket = genTicketDao.findById(ticketId);
+		return ticket;
+	}
+
 }
