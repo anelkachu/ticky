@@ -20,8 +20,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableAutoConfiguration
 public class TickyApplication extends SpringBootServletInitializer {
 
+	//mysql://bbf08f210b42d9:85198052@eu-cdbr-west-01.cleardb.com/heroku_5063c8cdb1f346e?reconnect=true
+	
 	static {
-		System.setProperty("OPENSHIFT_MYSQL_DB_HOST", "localhost");
+		System.setProperty("OPENSHIFT_MYSQL_DB_HOST", "eu-cdbr-west-01.cleardb.com");
 		System.setProperty("OPENSHIFT_MYSQL_DB_PORT", "3306");
 		System.setProperty("OPENSHIFT_MYSQL_DB_USERNAME", "root");
 		System.setProperty("OPENSHIFT_MYSQL_DB_PASSWORD", "");
