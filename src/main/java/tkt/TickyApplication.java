@@ -1,5 +1,7 @@
 package tkt;
 
+import java.io.File;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,9 +20,18 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableAutoConfiguration
 public class TickyApplication extends SpringBootServletInitializer {
 
+	//mysql://bbf08f210b42d9:85198052@eu-cdbr-west-01.cleardb.com/heroku_5063c8cdb1f346e?reconnect=true
+	
 //	static {
-//		System.setProperty("JDBC_DATABASE_URL",
-//				"postgres://jnrrerifzpesla:xSb-AJK8rmiH1pzL0u9fYGZhRW@ec2-79-125-4-181.eu-west-1.compute.amazonaws.com:5432/d52mjp6ep6ikrl");
+//		System.setProperty("OPENSHIFT_MYSQL_DB_HOST", "eu-cdbr-west-01.cleardb.com");
+//		System.setProperty("OPENSHIFT_MYSQL_DB_PORT", "3306");
+//		System.setProperty("OPENSHIFT_MYSQL_DB_USERNAME", "bbf08f210b42d9");
+//		System.setProperty("OPENSHIFT_MYSQL_DB_PASSWORD", "85198052");
+//		System.setProperty("OPENSHIFT_MYSQL_DB_NAME", "heroku_5063c8cdb1f346e?reconnect=true");
+//		
+//		System.setProperty("OPENSHIFT_DATA_DIR",
+//				System.getProperty("user.home") + File.separator + "Desktop" + File.separator + "RESOURCE_TKT_SERVER");
+//
 //	}
 
 	@Override
