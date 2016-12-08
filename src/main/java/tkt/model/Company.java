@@ -20,15 +20,13 @@ public class Company {
 	@Column(name = "hashTemplate")
 	private String hashTemplate;
 
+	@Column(name = "template")
+	private String template;
+	@Column(name = "logo")
+	private String logo;
+
 	public Company() {
 
-	}
-
-	public Company(long id, String name, String hashLogo, String hashTemplate) {
-		this._id = id;
-		this.name = name;
-		this.hashLogo = hashLogo;
-		this.hashTemplate = hashTemplate;
 	}
 
 	@Override
@@ -67,4 +65,21 @@ public class Company {
 	public void setHashTemplate(String hashTemplate) {
 		this.hashTemplate = hashTemplate;
 	}
+
+	public String getTemplate() {
+		return template;
+	}
+
+	public void setTemplate(String template) {
+		this.template = template;
+	}
+
+	public String getLogo() {
+		return logo;
+	}
+
+	public void setLogo(String logo) {
+		this.logo = logo;
+	}
+
 }
