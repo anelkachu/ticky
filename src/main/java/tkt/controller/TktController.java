@@ -7,8 +7,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,6 +17,7 @@ import java.util.zip.ZipOutputStream;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.tuple.Pair;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +30,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.github.wnameless.json.flattener.JsonFlattener;
+
 import tkt.dao.CompanyDao;
 import tkt.dao.GenTicketDao;
 import tkt.model.Company;
 import tkt.model.GenTicket;
+import tkt.model.Ticket;
+import tkt.util.Gzip;
+import tkt.util.Minify;
 import tkt.util.TktUtil;
 import tkt.util.Zip;
 
@@ -182,6 +186,22 @@ public class TktController {
 		GenTicket genTicket = new GenTicket();
 		genTicket.setId(uid);
 		b64TicketContent = b64TicketContent.replaceAll(" ", "+");
+
+		byte[] b64Decoded = Base64.decodeBase64(b64TicketContent);
+		String jsonContent = null;
+		try {
+			jsonContent = Gzip.decompress(b64Decoded);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Map<String, Object> map = JsonFlattener.flattenAsMap(jsonContent);
+		Ticket t = Ticket.generateTicketFromMap(map);
+
+		genTicket.setAmount(t.getTotalAmount());
+		genTicket.setBatchId(t.getBatchTicketId());
+		genTicket.setCompanyId(t.getCompanyId());
+		genTicket.setShopId(t.getShopId());
+
 		genTicket.setContent(b64TicketContent);
 		genTicket.setCreated(new Date());
 		genTicketDao.save(genTicket);

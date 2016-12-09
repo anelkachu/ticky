@@ -28,6 +28,18 @@ public class GenTicket {
 	@Column(columnDefinition = "TEXT")
 	private String content;
 
+	@Column(name = "shopId")
+	private String shopId;
+
+	@Column(name = "batchId")
+	private String batchId;
+
+	@Column(name = "companyId")
+	private int companyId;
+
+	@Column(name = "amount")
+	private Double amount;
+
 	public GenTicket() {
 		super();
 	}
@@ -59,6 +71,38 @@ public class GenTicket {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getShopId() {
+		return shopId;
+	}
+
+	public void setShopId(String shopId) {
+		this.shopId = shopId;
+	}
+
+	public String getBatchId() {
+		return batchId;
+	}
+
+	public void setBatchId(String batchId) {
+		this.batchId = batchId;
+	}
+
+	public int getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(int companyId) {
+		this.companyId = companyId;
+	}
+
+	public Double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(Double amount) {
+		this.amount = amount;
 	}
 
 }
